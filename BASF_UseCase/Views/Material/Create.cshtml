@@ -1,0 +1,33 @@
+﻿@model MaterialViewModel
+
+
+@{
+    ViewData["Title"] = "Create new Material";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>
+        Input Materials
+    </p>
+</div>
+
+<form asp-controller="Material" asp-action="PostValues" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="MaterialValue" class="form-label"></label>
+        <input asp-for="MaterialValue" class="form-control" />
+        <span asp-validation-for="MaterialValue" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label"></label>
+        <input asp-for="Quantity" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

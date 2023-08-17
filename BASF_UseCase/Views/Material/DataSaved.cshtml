@@ -1,0 +1,39 @@
+﻿@model MaterialListViewModel
+
+
+
+@{
+    ViewData["Title"] = "Historical Data";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Data Saved</h1>
+    <p>
+        Input Materials
+    </p>
+</div>
+
+
+<table class="table" style="font-size: 20px">
+    <thead>
+        <tr style="background-color: lightblue">
+            <th style="text-decoration: none">Material</th>
+            <th style="text-align: right">Qty</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var material in Model.MaterialList)
+        {
+            <tr>
+                <td>
+                    <a style="text-decoration: none;">
+                        @material.MaterialValue.ToString()
+                    </a>
+                </td>
+                <td style="text-align: right">@material.Quantity.ToString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-secondary" asp-action="Create">Create more</a>
