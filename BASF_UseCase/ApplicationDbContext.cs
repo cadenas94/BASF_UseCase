@@ -1,9 +1,10 @@
 ﻿using BASF_UseCase.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BASF_UseCase
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext: IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -13,9 +14,10 @@ namespace BASF_UseCase
         {
             base.OnModelCreating(modelBuilder);
 
-            //Usar API Fluente
-            modelBuilder.Entity<Material>().Property(prop => prop.MaterialValue).HasMaxLength(150).IsRequired();
-            modelBuilder.Entity<Material>().Property(prop => prop.Quantity).HasPrecision(precision: 5, scale: 2);
+            //Use of Fluent API            
+            modelBuilder.Entity<Material>().Property(prop => prop.MaterialValue).HasColumnType("char(40)").IsRequired();
+
+            modelBuilder.Entity<Material>().Property(prop => prop.Quantity).HasPrecision(precision: 8, scale: 3);
         }
 
         public DbSet<Material> Materials { get; set; }

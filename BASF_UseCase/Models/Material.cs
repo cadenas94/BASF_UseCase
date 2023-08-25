@@ -6,6 +6,4 @@
         public string MaterialValue { get; set; }
         public decimal Quantity { get; set; }
     }
-
-
 }

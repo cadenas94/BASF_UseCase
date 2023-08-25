@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Load JSON File";
+}
+<h2>Upload JSON File</h2>
+
+<form method="post" asp-action="LoadFile" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".json">
+    <button type="submit">Upload</button>
+</form>

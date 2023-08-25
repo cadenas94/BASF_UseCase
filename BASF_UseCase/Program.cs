@@ -1,10 +1,19 @@
 using BASF_UseCase;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var politicUsersAutehenticated = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(opciones =>
+{
+    opciones.Filters.Add(new AuthorizeFilter(politicUsersAutehenticated));
+});
 
 //builder.Services.AddTransient<IRepositorioTiposCuentas, RepositorioTiposCuentas>();
 
@@ -16,6 +25,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones => {
     //opciones.UseLazyLoadingProxies();
 }
     );
+
+builder.Services.AddAuthentication();
+
+builder.Services.AddIdentity<IdentityUser,  IdentityRole>(opciones => 
+{ 
+    opciones.SignIn.RequireConfirmedAccount = false;
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+
+builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+    opciones =>
+    {
+        opciones.LoginPath = "/users/login";
+        opciones.AccessDeniedPath = "/users/login";
+    });
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
@@ -32,7 +57,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+//Obtiene la data del usuario autenticado
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

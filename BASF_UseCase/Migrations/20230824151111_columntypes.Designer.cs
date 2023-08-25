@@ -4,6 +4,7 @@ using BASF_UseCase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BASF_UseCase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230824151111_columntypes")]
+    partial class columntypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,8 @@ namespace BASF_UseCase.Migrations
 
                     b.Property<string>("MaterialValue")
                         .IsRequired()
-                        .HasColumnType("char(40)");
+                        .HasMaxLength(150)
+                        .HasColumnType("char(150)");
 
                     b.Property<decimal>("Quantity")
                         .HasPrecision(8, 3)
