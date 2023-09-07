@@ -14,7 +14,7 @@ namespace BASF_UseCase
         {
             base.OnModelCreating(modelBuilder);
 
-            //Use of Fluent API            
+            //Use of Fluent API to define the type of values to the material and quantity         
             modelBuilder.Entity<Material>().Property(prop => prop.MaterialValue).HasColumnType("char(40)").IsRequired();
 
             modelBuilder.Entity<Material>().Property(prop => prop.Quantity).HasPrecision(precision: 8, scale: 3);

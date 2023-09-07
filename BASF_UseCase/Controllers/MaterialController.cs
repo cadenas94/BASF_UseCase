@@ -23,12 +23,12 @@ namespace BASF_UseCase.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-
+        //Return the view to add a new material to the app
         public IActionResult Create()
         {
             return View();
         }
-
+        //Collect the data introduced by the user to save the material and quantity from the view
         [HttpPost]
         public  async Task<IActionResult> PostValues(MaterialViewModel model)
         {
@@ -41,7 +41,7 @@ namespace BASF_UseCase.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction("DataSaved");
         }
-
+        //Show all the data saved in the database
         [HttpGet]
         public async Task<IActionResult> DataSaved()
         {           
@@ -50,12 +50,12 @@ namespace BASF_UseCase.Controllers
 
             return View(model);
         }
-
+        //View to load a JSON file with material data
         public IActionResult LoadFile()
         {
             return View();
         }
-
+        //Method to get the file picked by the user and save in the DB
         [HttpPost]
         public async Task<IActionResult> LoadFile(IFormFile file)
         {
@@ -68,7 +68,6 @@ namespace BASF_UseCase.Controllers
             {
                 var content = await reader.ReadToEndAsync();
                 materialList = JsonConvert.DeserializeObject<List<JsonFileLoadViewModel>>(content);
-
             }
 
             // Convert JsonFileLoadViewModel objects to Material entities using LINQ

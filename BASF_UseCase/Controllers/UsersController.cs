@@ -18,13 +18,13 @@ namespace BASF_UseCase.Controllers
             this.signInManager = signInManager;
             this.context = context;
         }
-
+        //Return the register view
         [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
-
+        //Register the user in the application
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegistroViewModel modelo)
@@ -36,7 +36,7 @@ namespace BASF_UseCase.Controllers
 
             var usuario = new IdentityUser() { Email = modelo.Email, UserName = modelo.Email };
             var resultado = await userManager.CreateAsync(usuario, password: modelo.Password);
-
+            //Check if the result was succesfull or not
             if (resultado.Succeeded)
             {
                 await signInManager.SignInAsync(usuario, isPersistent: true);
@@ -52,7 +52,7 @@ namespace BASF_UseCase.Controllers
 
             return View(modelo);
         }
-
+        //Login process, return the login view
         [AllowAnonymous]
         public IActionResult Login(string mensaje = null)
         {
@@ -62,7 +62,7 @@ namespace BASF_UseCase.Controllers
             }
             return View();
         }
-
+        //Method to login a user in the application
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel modelo)
@@ -73,7 +73,7 @@ namespace BASF_UseCase.Controllers
             }
 
             var resultado = await signInManager.PasswordSignInAsync(modelo.Email, modelo.Password, modelo.Recuerdame, lockoutOnFailure: false);
-
+            //Check if the result was succesfull or not
             if (resultado.Succeeded)
             {
                 return RedirectToAction("Create", "Material");
@@ -81,7 +81,7 @@ namespace BASF_UseCase.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Nombre de usuario o password Incorrecto.");
+                ModelState.AddModelError(string.Empty, "Wrond user name or wrong password.");
                 return View(modelo);
             }
         }

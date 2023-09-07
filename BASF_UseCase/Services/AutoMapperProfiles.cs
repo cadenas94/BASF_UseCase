@@ -9,7 +9,7 @@ namespace BASF_UseCase.Services
         public AutoMapperProfiles()
         {
 
-            //CreateMap<Material, MaterialListViewModel>();//.ForMember(dto => dto.MaterialList, ent => ent.MapFrom(prop => prop..Select(s => s.Cine)))
+            //Definition of the mapping between the entitites and the DTOs
             CreateMap<Material, MaterialViewModel>();
             CreateMap<List<Material>, MaterialListViewModel>()
                 .ForMember(dest => dest.MaterialList, opt => opt.MapFrom(src => src));

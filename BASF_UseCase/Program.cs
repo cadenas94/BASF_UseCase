@@ -15,19 +15,16 @@ builder.Services.AddControllersWithViews(opciones =>
     opciones.Filters.Add(new AuthorizeFilter(politicUsersAutehenticated));
 });
 
-//builder.Services.AddTransient<IRepositorioTiposCuentas, RepositorioTiposCuentas>();
-
 //Add DBContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(opciones => {
 
     opciones.UseSqlServer(connectionString);
-    //opciones.UseLazyLoadingProxies();
 }
     );
 
 builder.Services.AddAuthentication();
-
+//Add identity user authentication service
 builder.Services.AddIdentity<IdentityUser,  IdentityRole>(opciones => 
 { 
     opciones.SignIn.RequireConfirmedAccount = false;
